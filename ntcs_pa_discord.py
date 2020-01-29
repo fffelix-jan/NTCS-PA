@@ -1,6 +1,8 @@
-# Remember to scroll down past the import statements to set your bot's token.
-
+# Set your bot's token and the name of the system here:
+token = ""
 systemName = "Secondary PA"
+
+
 print("""
 NTCS TTS PA System (ver. 1.0)
 Copyright (c) 2020 Felix An
@@ -28,11 +30,6 @@ except:
     sys.exit(2)
 
 client = discord.Client()
-
-
-# Set your bot's token here
-token = ""
-
 
 @client.event
 async def on_ready():
