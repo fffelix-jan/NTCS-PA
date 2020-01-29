@@ -4,6 +4,7 @@ PA system that can play messages sent to it over Discord using gTTS. Originally 
 1. Install the latest version of Python 3.
 1. Download all the files in this repository to a folder on your Windows computer.
 1. Install the necessary modules. Type: `pip install gTTS playsound discord`
+1. Open `ntcs_pa_discord.py` in an editor, and add your bot's token.
 1. Run `ntcs_pa_discord.py`.
 
 ## Credits  
