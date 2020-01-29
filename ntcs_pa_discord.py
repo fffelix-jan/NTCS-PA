@@ -112,6 +112,8 @@ def mainFn(inStr):
         return bellError()
     elif command == "anc":
         return announce(mainInput)
+    elif command == "time":
+        return time.ctime()
     else:
         return "ERROR: Invalid command!"
 
