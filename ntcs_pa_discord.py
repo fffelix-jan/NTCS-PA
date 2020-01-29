@@ -64,11 +64,11 @@ def announce(announcement):
         return "ERROR: Failed to generate announcement!"
 
     os.system("nircmdc.exe muteappvolume timechimes.exe 1")  # mute TimeChimes while the announcement is being made
+    print(time.ctime() + ": \"" + announcement + "\"")
     playsound(warnfile)
     playsound(speechfile)
     os.system("nircmdc.exe muteappvolume timechimes.exe 0")  # unmute TimeChimes
-
-    print(time.ctime() + ": \"" + announcement + "\"")
+    
     return "Announcement \"" + announcement + "\" successfully played on " + systemName + "!"
 
 
