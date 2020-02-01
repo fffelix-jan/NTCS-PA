@@ -79,7 +79,7 @@ def goToOffice(studentName):
 
 
 def attendanceReminder():
-    return announce("Attention all teachers. If you have not handed in your attendance slips, please do so now. Thank you!")
+    return announce("Attention all teachers. If you have not handed in your attendance slips, please hand them in now. Thank you!")
 
 
 def indoorRecess():
@@ -94,7 +94,7 @@ def bellError():
 
 def mainFn(inStr):
     global client
-    command = inStr.split(' ', 1)[0]
+    command = inStr.split(' ', 1)[0].lower()
     try:
         mainInput = inStr.split(' ', 1)[1]
     except:
