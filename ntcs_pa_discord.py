@@ -31,6 +31,7 @@ except:
 
 client = discord.Client()
 
+
 @client.event
 async def on_ready():
     print("Connected to Discord.\n")
@@ -65,7 +66,7 @@ def announce(announcement):
     playsound(warnfile)
     playsound(speechfile)
     os.system("nircmdc.exe muteappvolume timechimes.exe 0")  # unmute TimeChimes
-    
+
     return "Announcement \"" + announcement + "\" successfully played on " + systemName + "!"
 
 
