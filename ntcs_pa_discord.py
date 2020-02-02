@@ -23,10 +23,9 @@ os.system("nircmdc.exe muteappvolume timechimes.exe 0")
 try:
     print("Loading...")
     from gtts import gTTS
-    from playsound import playsound
     import discord
 except:
-    sys.stderr.write("ERROR: Failed to import modules! Please make sure you have gTTS, playsound and discord installed. Install with: \"pip install gTTS playsound discord\"\n")
+    sys.stderr.write("ERROR: Failed to import modules! Please make sure you have gTTS and discord installed. Install with: \"pip install gTTS discord\"\n")
     sys.exit(2)
 
 client = discord.Client()
@@ -36,11 +35,43 @@ client = discord.Client()
 async def on_ready():
     print("Connected to Discord.\n")
 
-# Function used to announce everything
+
+# This function is a minor modification of the playsound module by TaylorSMarks: https://github.com/TaylorSMarks/playsound
+def playsound(sound, block=True):
+    from ctypes import c_buffer, windll
+    from random import random
+    from time import sleep
+    from sys import getfilesystemencoding
+
+    def winCommand(*command):
+        buf = c_buffer(255)
+        command = ' '.join(command).encode(getfilesystemencoding())
+        errorCode = int(windll.winmm.mciSendStringA(command, buf, 254, 0))
+        if errorCode:
+            errorBuffer = c_buffer(255)
+            windll.winmm.mciGetErrorStringA(errorCode, errorBuffer, 254)
+            exceptionMessage = ('\n    Error ' + str(errorCode) + ' for command:'
+                                '\n        ' + command.decode() +
+                                '\n    ' + errorBuffer.value.decode())
+            raise PlaysoundException(exceptionMessage)
+        return buf.value
+
+    alias = 'playsound_' + str(random())
+    winCommand('open "' + sound + '" alias', alias)
+    winCommand('set', alias, 'time format milliseconds')
+    durationInMS = winCommand('status', alias, 'length')
+    winCommand('play', alias, 'from 0 to', durationInMS.decode())
+
+    # Beginning of modifications by Felix An
+    # This closes the file so that it can be deleted
+    sleep(int(durationInMS.decode()) / 1000)
+    winCommand('close ', alias)
+    # End of modifications
+
 
 createMessageSuccess = False
 
-
+# Function used to announce everything
 def announce(announcement):
     global createMessageSuccess
     createMessageSuccess = False
@@ -48,7 +79,6 @@ def announce(announcement):
     warnfile = "attn.wav"
     speechfile = "speak.mp3"
 
-    os.system("@echo off && del /F /A " + speechfile)   # delete the old file, or else it will not work
 
     try:
         tts = gTTS(text=announcement, lang='en')
@@ -66,6 +96,7 @@ def announce(announcement):
     playsound(warnfile)
     playsound(speechfile)
     os.system("nircmdc.exe muteappvolume timechimes.exe 0")  # unmute TimeChimes
+    os.remove(speechfile)
 
     return "Announcement \"" + announcement + "\" successfully played on " + systemName + "!"
 
