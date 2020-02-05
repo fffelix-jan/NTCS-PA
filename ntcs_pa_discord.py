@@ -69,26 +69,15 @@ def playsound(sound, block=True):
     # End of modifications
 
 
-createMessageSuccess = False
-
 # Function used to announce everything
 def announce(announcement):
-    global createMessageSuccess
-    createMessageSuccess = False
-
     warnfile = "attn.wav"
     speechfile = "speak.mp3"
-
 
     try:
         tts = gTTS(text=announcement, lang='en')
         tts.save(speechfile)
-        createMessageSuccess = True
     except:
-        pass
-
-    # if for some reason Google can't generate a sound file, give an error
-    if not createMessageSuccess:
         return "ERROR: Failed to generate announcement!"
 
     os.system("nircmdc.exe muteappvolume timechimes.exe 1")  # mute TimeChimes while the announcement is being made
