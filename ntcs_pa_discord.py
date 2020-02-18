@@ -1,3 +1,5 @@
+# Licenced under the GNU GPL v3: http://www.gnu.org/licenses/gpl-3.0.en.html
+
 # Set your bot's token and the name of the system here:
 token = ""
 systemName = "Secondary PA"
