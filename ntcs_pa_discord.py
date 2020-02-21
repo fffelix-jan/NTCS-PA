@@ -55,7 +55,7 @@ def playsound(sound, block=True):
             exceptionMessage = ('\n    Error ' + str(errorCode) + ' for command:'
                                 '\n        ' + command.decode() +
                                 '\n    ' + errorBuffer.value.decode())
-            raise PlaysoundException(exceptionMessage)
+            raise Exception(exceptionMessage)
         return buf.value
 
     alias = 'playsound_' + str(random())
