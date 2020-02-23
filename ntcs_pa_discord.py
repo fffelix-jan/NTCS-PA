@@ -30,8 +30,14 @@ except:
     sys.stderr.write("ERROR: Failed to import modules! Please make sure you have gTTS and discord installed. Install with: \"pip install gTTS discord\"\n")
     sys.exit(2)
 
-client = discord.Client()
+warnfile = "attn.wav"
+speechfile = "speak.mp3"
 
+if not os.path.exists(warnfile):
+    sys.stderr.write("ERROR: You must place the warning sound \"" + warnfile + "\" in the same folder as this program!\n")
+    sys.exit(3)
+
+client = discord.Client()
 
 @client.event
 async def on_ready():
@@ -73,8 +79,12 @@ def playsound(sound, block=True):
 
 # Function used to announce everything
 def announce(announcement):
-    warnfile = "attn.wav"
-    speechfile = "speak.mp3"
+    global warnfile
+    global speechfile
+    try:
+        os.remove(speechfile)
+    except:
+        pass
 
     try:
         tts = gTTS(text=announcement, lang='en')
@@ -87,9 +97,23 @@ def announce(announcement):
     playsound(warnfile)
     playsound(speechfile)
     os.system("nircmdc.exe muteappvolume timechimes.exe 0")  # unmute TimeChimes
-    os.remove(speechfile)
 
-    return "Announcement \"" + announcement + "\" successfully played on " + systemName + "!"
+    return "ANNOUNCEMENT: \"" + announcement + "\" successfully played on " + systemName + "!"
+
+# Function to repeat announcements
+def repeatAnnoucement():
+    global warnfile
+    global speechfile
+    if os.path.exists(speechfile):
+        os.system("nircmdc.exe muteappvolume timechimes.exe 1")  # mute TimeChimes while the announcement is being made
+        print(time.ctime() + ": <repeat of previous announcement>")
+        playsound(warnfile)
+        playsound(speechfile)
+        os.system("nircmdc.exe muteappvolume timechimes.exe 0")  # unmute TimeChimes
+
+        return "ANNOUNCEMENT: Previous announcement successfully repeated on " + systemName + "!"
+    else:
+        return "ERROR: No announcement to repeat!"
 
 
 # Customize announcements and define all the commands here
@@ -97,24 +121,28 @@ def announce(announcement):
 def goToOffice(studentName):
     if studentName == "":
         return "ERROR: You must enter a student name!"
-    studentName += '.'
-    return announce((studentName + " Please come to the office. ") * 2)
+    return announce((studentName + ", Please come to the office. ") * 2)
+
+def goToStudyHall(studentName):
+    if studentName == "":
+        return "ERROR: You must enter a student name!"
+    return announce((studentName + ", Please go to Study Hall. ") * 2)
 
 
 def attendanceReminder():
     return announce("Attention all teachers. If you have not handed in your attendance slips, please hand them in now. Thank you!")
 
+def delayedAttendance():
+    return announce("Attention all teachers. Attendance will be delayed today. Once again, attendance will be delayed today. Thank you!")
 
 def indoorRecess():
     return announce("Attention all teachers and students. We will be having an indoor recess. Once again, we will be having an indoor recess. Thank you!")
 
-
 def bellError():
     return announce("Attention all teachers and students. Today is not a short bell day. Please disregard the previous bell. Thank you!")
 
+
 # Main function triggered when the bot receives a message - put the commands that you want it to recognize here
-
-
 def mainFn(inStr):
     global client
     command = inStr.split(' ', 1)[0].lower()
@@ -122,15 +150,19 @@ def mainFn(inStr):
         mainInput = inStr.split(' ', 1)[1]
     except:
         mainInput = ""
-    if command == "ofc":
+    if command == "of":
         return goToOffice(mainInput)
+    elif command == "st":
+        return goToStudyHall(mainInput)
     elif command == "ar":
         return attendanceReminder()
+    elif command == "da":
+        return delayedAttendance()
     elif command == "ir":
         return indoorRecess()
-    elif command == "berr":
+    elif command == "nsb":
         return bellError()
-    elif command == "anc":
+    elif command == "an":
         return announce(mainInput)
     elif command == "time":
         return time.ctime()
