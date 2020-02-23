@@ -101,7 +101,7 @@ def announce(announcement):
     return "ANNOUNCEMENT: \"" + announcement + "\" successfully played on " + systemName + "!"
 
 # Function to repeat announcements
-def repeatAnnoucement():
+def repeatAnnouncement():
     global warnfile
     global speechfile
     if os.path.exists(speechfile):
