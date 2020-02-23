@@ -121,12 +121,12 @@ def repeatAnnoucement():
 def goToOffice(studentName):
     if studentName == "":
         return "ERROR: You must enter a student name!"
-    return announce((studentName + ", Please come to the office. ") * 2)
+    return announce((studentName + ". Please come to the office. ") * 2)
 
 def goToStudyHall(studentName):
     if studentName == "":
         return "ERROR: You must enter a student name!"
-    return announce((studentName + ", Please go to Study Hall. ") * 2)
+    return announce((studentName + ". Please go to Study Hall. ") * 2)
 
 
 def attendanceReminder():
@@ -164,6 +164,8 @@ def mainFn(inStr):
         return bellError()
     elif command == "an":
         return announce(mainInput)
+    elif command == "rp":
+        return repeatAnnouncement()
     elif command == "time":
         return time.ctime()
     else:
