@@ -87,7 +87,7 @@ def announce(announcement):
         pass
 
     try:
-        tts = gTTS(text=announcement, lang='en')
+        tts = gTTS(text=announcement, tld='ca', lang='en')  # uses the Canadian Google Translate site
         tts.save(speechfile)
     except:
         return "ERROR: Failed to generate announcement!"
