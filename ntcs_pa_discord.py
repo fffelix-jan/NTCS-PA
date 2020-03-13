@@ -92,11 +92,11 @@ def announce(announcement):
     except:
         return "ERROR: Failed to generate announcement!"
 
-    os.system("nircmdc.exe setappvolume timechimes.exe 0.3")  # reduce TimeChimes volume while the announcement is being made
+    os.system("nircmdc.exe setappvolume timechimes.exe 0.1")  # reduce TimeChimes volume while the announcement is being made
     print(time.ctime() + ": \"" + announcement + "\"")
     playsound(warnfile)
     playsound(speechfile)
-    os.system("nircmdc.exe muteappvolume timechimes.exe 1")  # return TimeChimes to full volume
+    os.system("nircmdc.exe setappvolume timechimes.exe 1")  # return TimeChimes to full volume
 
     return "ANNOUNCEMENT: \"" + announcement + "\" successfully played on " + systemName + "!"
 
