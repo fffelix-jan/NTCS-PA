@@ -29,6 +29,11 @@ try:
 except:
     sys.stderr.write("ERROR: Failed to import modules! Please make sure you have gTTS and discord installed. Install with: \"pip install gTTS discord\"\n")
     sys.exit(2)
+from ctypes import c_buffer, windll
+from random import random
+from time import sleep
+from sys import getfilesystemencoding
+
 
 warnfile = "attn.wav"
 speechfile = "speak.mp3"
@@ -46,11 +51,6 @@ async def on_ready():
 
 # This function is a minor modification of the playsound module by TaylorSMarks: https://github.com/TaylorSMarks/playsound
 def playsound(sound, block=True):
-    from ctypes import c_buffer, windll
-    from random import random
-    from time import sleep
-    from sys import getfilesystemencoding
-
     def winCommand(*command):
         buf = c_buffer(255)
         command = ' '.join(command).encode(getfilesystemencoding())
