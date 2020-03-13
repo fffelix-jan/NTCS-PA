@@ -21,7 +21,7 @@ import time
 if not sys.platform == 'win32':
     sys.stderr.write("ERROR: This program must be run on a Windows Vista or newer system!\n")
     sys.exit(1)
-os.system("nircmdc.exe muteappvolume timechimes.exe 0")
+os.system("nircmdc.exe setappvolume timechimes.exe 1")
 try:
     print("Loading...")
     from gtts import gTTS
@@ -92,11 +92,11 @@ def announce(announcement):
     except:
         return "ERROR: Failed to generate announcement!"
 
-    os.system("nircmdc.exe muteappvolume timechimes.exe 1")  # mute TimeChimes while the announcement is being made
+    os.system("nircmdc.exe setappvolume timechimes.exe 0.3")  # reduce TimeChimes volume while the announcement is being made
     print(time.ctime() + ": \"" + announcement + "\"")
     playsound(warnfile)
     playsound(speechfile)
-    os.system("nircmdc.exe muteappvolume timechimes.exe 0")  # unmute TimeChimes
+    os.system("nircmdc.exe muteappvolume timechimes.exe 1")  # return TimeChimes to full volume
 
     return "ANNOUNCEMENT: \"" + announcement + "\" successfully played on " + systemName + "!"
 
