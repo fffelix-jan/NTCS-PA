@@ -105,11 +105,11 @@ def repeatAnnouncement():
     global warnfile
     global speechfile
     if os.path.exists(speechfile):
-        os.system("nircmdc.exe muteappvolume timechimes.exe 1")  # mute TimeChimes while the announcement is being made
+        os.system("nircmdc.exe setappvolume timechimes.exe 0.1")  # mute TimeChimes while the announcement is being made
         print(time.ctime() + ": <repeat of previous announcement>")
         playsound(warnfile)
         playsound(speechfile)
-        os.system("nircmdc.exe muteappvolume timechimes.exe 0")  # unmute TimeChimes
+        os.system("nircmdc.exe setappvolume timechimes.exe 1")  # unmute TimeChimes
 
         return "ANNOUNCEMENT: Previous announcement successfully repeated on " + systemName + "!"
     else:
