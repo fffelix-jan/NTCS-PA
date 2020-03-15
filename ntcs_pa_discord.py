@@ -98,7 +98,7 @@ def announce(announcement):
         playsound(warnfile)
         playsound(speechfile)
     except:
-        return "ERROR: Failed to play sound! (Try restarting the PA system computer.)
+        return "ERROR: Failed to play sound! (Try restarting the PA system computer.)"
     os.system("nircmdc.exe setappvolume timechimes.exe 1")  # return TimeChimes to full volume
 
     return "ANNOUNCEMENT: \"" + announcement + "\" successfully played on " + systemName + "!"
@@ -114,7 +114,7 @@ def repeatAnnouncement():
             playsound(warnfile)
             playsound(speechfile)
         except:
-            return "ERROR: Failed to play sound! (Try restarting the PA system computer.)
+            return "ERROR: Failed to play sound! (Try restarting the PA system computer.)"
             os.system("nircmdc.exe setappvolume timechimes.exe 1")  # unmute TimeChimes
 
         return "ANNOUNCEMENT: Previous announcement successfully repeated on " + systemName + "!"
