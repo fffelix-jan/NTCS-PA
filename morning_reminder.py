@@ -5,9 +5,9 @@ import datetime
 
 dstoday = datetime.datetime.today()
 dttoday = datetime.date.today()
-#if dstoday.strftime("%A") == "Saturday" or dstoday.strftime("%A") == "Sunday":
-#    print("Today is a weekend, exiting...")
-#    sys.exit(0)
+if dstoday.strftime("%A") == "Saturday" or dstoday.strftime("%A") == "Sunday":
+    print("Today is a weekend, exiting...")
+    sys.exit(0)
 
 import os
 os.chdir(r"C:\Users\ebell\NTCS-PA")
