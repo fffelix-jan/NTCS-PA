@@ -21,6 +21,8 @@ import time
 if not sys.platform.startswith('win'):
     sys.stderr.write("ERROR: This program must be run on a Windows Vista or newer system!\n")
     sys.exit(1)
+os.system("nircmdc.exe mutesysvolume 0")
+os.system("nircmdc.exe setsysvolume 65535")
 os.system("nircmdc.exe setappvolume timechimes.exe 1")
 try:
     print("Loading...")
