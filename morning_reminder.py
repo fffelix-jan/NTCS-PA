@@ -4,17 +4,17 @@ import sys
 import datetime
 
 dstoday = datetime.datetime.today()
-dttoday = datetime.time.today()
-if dstoday.strftime("%A") == "Saturday" or dstoday.strftime("%A") == "Sunday":
-    print("Today is a weekend, exiting...")
-    sys.exit(0)
+dttoday = datetime.date.today()
+#if dstoday.strftime("%A") == "Saturday" or dstoday.strftime("%A") == "Sunday":
+#    print("Today is a weekend, exiting...")
+#    sys.exit(0)
 
 import os
+os.chdir(r"C:\Users\ebell\NTCS-PA")
 
 if not sys.platform.startswith('win'):
     sys.stderr.write("ERROR: This program must be run on a Windows Vista or newer system!\n")
     sys.exit(1)
-os.system("nircmdc.exe setappvolume timechimes.exe 1")
 try:
     from gtts import gTTS
 except:
@@ -59,7 +59,6 @@ def playsound(sound, block=True):
     winCommand('close ', alias)
     # End of modifications
 
-
 # Function used to announce everything
 def announce(announcement):
     global warnfile
@@ -79,7 +78,8 @@ def announce(announcement):
         print("Announcing...")
         playsound(warnfile)
         playsound(speechfile)
+        os.remove(speechfile)
     except:
         print("ERROR: Failed to play sound! (Try restarting the PA system computer.)")
         
-announce("Good morning North Toronto Christian School! Today's date is " + dstoday.strftime("%A") + " " + dstoday.strftime("%B") + " the " + ordinal(dttoday().day) + " " + str(dttoday().year) + "! Classes will begin shortly! Please remember to bring all necessary supplies for class. Thank you!")
+announce("Good morning North Toronto Christian School! Today's date is " + dstoday.strftime("%A") + " " + dstoday.strftime("%B") + " the " + ordinal(dttoday.day) + " " + str(dttoday.year) + "! Classes will begin shortly! Please remember to bring all necessary supplies for class. Thank you!")
