@@ -1,8 +1,16 @@
 print("NTCS Morning Reminder\nLoading...")
 
 import sys
-import os
 import datetime
+
+dstoday = datetime.datetime.today()
+dttoday = datetime.time.today()
+if dstoday.strftime("%A") == "Saturday" or dstoday.strftime("%A") == "Sunday":
+    print("Today is a weekend, exiting...")
+    sys.exit(0)
+
+import os
+
 if not sys.platform.startswith('win'):
     sys.stderr.write("ERROR: This program must be run on a Windows Vista or newer system!\n")
     sys.exit(1)
@@ -20,8 +28,6 @@ from ctypes import c_buffer, windll
 from random import random
 from time import sleep
 from sys import getfilesystemencoding
-
-dtoday = datetime.datetime.today()
 
 warnfile = "attn.wav"
 speechfile = "morningReminder.mp3"
@@ -70,9 +76,10 @@ def announce(announcement):
         print("ERROR: Failed to generate announcement!")
 
     try:
+        print("Announcing...")
         playsound(warnfile)
         playsound(speechfile)
     except:
         print("ERROR: Failed to play sound! (Try restarting the PA system computer.)")
         
-announce("Good morning North Toronto Christian School! Today's date is " + dtoday.strftime("%A") + ", " + dtoday.strftime("%B") + " the " + ordinal(dtoday().day) + ", " + str(dtoday().year) + ". Classes will begin shortly. Please remember to bring all necessary supplies for class. Thank you!")
+announce("Good morning North Toronto Christian School! Today's date is " + dstoday.strftime("%A") + " " + dstoday.strftime("%B") + " the " + ordinal(dttoday().day) + " " + str(dttoday().year) + "! Classes will begin shortly! Please remember to bring all necessary supplies for class. Thank you!")
