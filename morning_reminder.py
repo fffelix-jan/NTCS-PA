@@ -73,6 +73,7 @@ def announce(announcement):
         tts.save(speechfile)
     except:
         print("ERROR: Failed to generate announcement!")
+        return
 
     try:
         print("Announcing...")
@@ -82,4 +83,4 @@ def announce(announcement):
     except:
         print("ERROR: Failed to play sound! (Try restarting the PA system computer.)")
         
-announce("Good morning North Toronto Christian School! Today's date is " + dstoday.strftime("%A") + " " + dstoday.strftime("%B") + " the " + ordinal(dttoday.day) + " " + str(dttoday.year) + "! Classes will begin shortly! Please remember to bring all necessary supplies for class. Thank you!")
+announce("Good morning North Toronto Christian School! Today's date is " + dstoday.strftime("%A") + " " + dstoday.strftime("%B") + " the " + ordinal(dttoday.day) + ", " + str(dttoday.year) + "! Classes will begin shortly! Please remember to bring all necessary supplies for class. Thank you!")
